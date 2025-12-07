@@ -6,8 +6,8 @@ A full-stack MERN application for discovering, creating, and sharing authentic N
 
 ## 🌟 Live Demo
 
-- **Frontend:** [https://your-app.vercel.app](https://your-app.vercel.app)
-- **Backend API:** [https://your-api.render.com](https://your-api.render.com)
+- **Frontend:** (https://9jakitchen-frontend.vercel.app)
+- **Backend API:** (https://https://ninejakitchen-api.onrender.com)
 
 ## 📋 Table of Contents
 
@@ -91,7 +91,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/9jakitchen.git
+git clone https://github.com/Austinixe/9jakitchen-frontend/tree/main/client
 cd 9jakitchen
 ```
 
@@ -409,16 +409,7 @@ VITE_API_URL=https://your-backend.onrender.com/api
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](https://via.placeholder.com/800x500/f97316/ffffff?text=Home+Page+Screenshot)
-
-### Recipe Detail
-![Recipe Detail](https://via.placeholder.com/800x500/f97316/ffffff?text=Recipe+Detail+Screenshot)
-
-### Create Recipe
-![Create Recipe](https://via.placeholder.com/800x500/f97316/ffffff?text=Create+Recipe+Screenshot)
-
-### My Recipes
-![My Recipes](https://via.placeholder.com/800x500/f97316/ffffff?text=My+Recipes+Screenshot)
+https://9jakitchen-frontend.vercel.app/
 
 ## 🎯 Future Enhancements
 
@@ -451,9 +442,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourname)
+**Augustine Omonkaro Salami**
+- GitHub:(https://github.com/Austinixe)
+- LinkedIn: [Your Name](https://linkedin.com/in/AugustineSalami)
 - Email: your.email@example.com
 
 ## 🙏 Acknowledgments
