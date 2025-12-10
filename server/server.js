@@ -13,12 +13,27 @@ const userRoutes = require('./routes/users');
 
 const app = express();
 
-// Middleware
-app.use(cors({
-  origin: "https://9jakitchen-frontend.vercel.app",
-  credentials: true
-}));
+// Middleware: CORS for dev and prod
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://localhost:4173",
+  "https://9jakitchen-frontend.vercel.app"
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -60,10 +75,8 @@ const PORT = process.env.PORT || 5000;
 
 // Only connect if this file is run directly
 if (require.main === module) {
-  // 🔹 DEBUG: Print the MongoDB URI
   console.log("🔹 MONGODB_URI is:", process.env.MONGODB_URI);
 
-  // Check if MONGODB_URI is defined
   if (!process.env.MONGODB_URI) {
     console.error('❌ MONGODB_URI is not defined. Please set it in Render environment variables.');
     process.exit(1);
