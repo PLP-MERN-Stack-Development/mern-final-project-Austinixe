@@ -1,20 +1,21 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    setIsMenuOpen(false);
+    setMobileMenuOpen(false);
     navigate('/');
   };
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -22,7 +23,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2" onClick={closeMenu}>
+          <Link to="/" className="flex items-center space-x-2" onClick={closeMobileMenu}>
             <span className="text-2xl">🍲</span>
             <span className="text-xl font-bold text-primary-600">9jaKitchen</span>
           </Link>
@@ -72,91 +73,89 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 focus:outline-none"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition"
+            aria-label="Toggle menu"
           >
-            <span className="sr-only">Open main menu</span>
-            {!isMenuOpen ? (
-              <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6 text-gray-700" />
             ) : (
-              <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <Menu className="w-6 h-6 text-gray-700" />
             )}
           </button>
         </div>
-      </div>
 
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50"
-            >
-              Browse
-            </Link>
-            
-            {isAuthenticated ? (
-              <>
-                <Link
-                  to="/create"
-                  onClick={closeMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50"
-                >
-                  Create Recipe
-                </Link>
-                <Link
-                  to="/my-recipes"
-                  onClick={closeMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50"
-                >
-                  My Recipes
-                </Link>
-                <Link
-                  to="/favorites"
-                  onClick={closeMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50"
-                >
-                  Favorites
-                </Link>
-                <div className="px-3 py-2 border-t border-gray-200">
-                  <p className="text-sm text-gray-600 mb-2">Hi, {user?.name}</p>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-sm transition"
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t">
+            <div className="flex flex-col space-y-3">
+              <Link
+                to="/"
+                onClick={closeMobileMenu}
+                className="text-gray-700 hover:text-primary-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition"
+              >
+                Browse Recipes
+              </Link>
+
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/create"
+                    onClick={closeMobileMenu}
+                    className="text-gray-700 hover:text-primary-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition"
                   >
-                    Logout
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  onClick={closeMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  onClick={closeMenu}
-                  className="block px-3 py-2 rounded-md text-base font-medium bg-primary-600 text-white hover:bg-primary-700"
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
+                    Create Recipe
+                  </Link>
+                  <Link
+                    to="/my-recipes"
+                    onClick={closeMobileMenu}
+                    className="text-gray-700 hover:text-primary-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition"
+                  >
+                    My Recipes
+                  </Link>
+                  <Link
+                    to="/favorites"
+                    onClick={closeMobileMenu}
+                    className="text-gray-700 hover:text-primary-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition"
+                  >
+                    Favorites
+                  </Link>
+                  <div className="px-4 py-2 border-t border-gray-200 mt-2 pt-4">
+                    <p className="text-sm text-gray-600 mb-3">
+                      Logged in as <span className="font-medium">{user?.name}</span>
+                    </p>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-sm transition"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={closeMobileMenu}
+                    className="text-gray-700 hover:text-primary-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={closeMobileMenu}
+                    className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition mx-4"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 }
