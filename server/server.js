@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Load env vars (for local dev)
+// Load env vars
 dotenv.config();
 
 const authRoutes = require('./routes/auth');
@@ -24,14 +24,15 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, Postman)
+      // Allow requests with no origin (like Postman)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, false); // Reject unauthorized origins without throwing
       }
     },
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 200 // Support preflight requests
   })
 );
 
@@ -73,12 +74,11 @@ app.use((req, res) => {
 // Connect to MongoDB and start server
 const PORT = process.env.PORT || 5000;
 
-// Only connect if this file is run directly
 if (require.main === module) {
   console.log("🔹 MONGODB_URI is:", process.env.MONGODB_URI);
 
   if (!process.env.MONGODB_URI) {
-    console.error('❌ MONGODB_URI is not defined. Please set it in Render environment variables.');
+    console.error('❌ MONGODB_URI is not defined. Please set it in environment variables.');
     process.exit(1);
   }
 
